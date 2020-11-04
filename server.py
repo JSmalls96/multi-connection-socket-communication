@@ -19,7 +19,7 @@ def handle_client(client):  # Takes client socket as argument.
     """Handles a single client connection."""
     target_message_re_case = "^/msg.*"
     name = client.recv(BUFSIZ).decode("utf8")
-    welcome = 'Welcome %s!\n\n#! If you ever want to quit, type {exit} to exit.\n#! If you want to private message someone in the chatroom type /msg target the your message' % name
+    welcome = 'Welcome %s!\n\n#! If you ever want to quit, type {exit} to exit.\n#! If you want to private message someone in the chatroom type /msg target: then your message' % name
     client.send(bytes(welcome, "utf8"))
     msg = "%s has joined the chat!" % name
     broadcast(bytes(msg, "utf8"))
@@ -27,6 +27,7 @@ def handle_client(client):  # Takes client socket as argument.
 
     while True:
         msg = client.recv(BUFSIZ)
+        print("MESSAGE: "+msg.decode("utf8"))
         if msg != bytes("{exit}", "utf8"):
             if re.match(target_message_re_case, msg.decode("utf8")):
                 split = msg.decode("utf8").split(" ",2)
