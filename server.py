@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Server for multithreaded (asynchronous) chat application."""
-from socket import AF_INET, socket, SOCK_STREAM
+# from socket import AF_INET, socket, SOCK_STREAM
+import socket
 from threading import Thread
 import re
 
@@ -57,12 +58,13 @@ def broadcast(msg, prefix=""):  # prefix is for name identification.
 clients = {}
 addresses = {}
 
-HOST = '192.168.56.1'
+# HOST = '192.168.56.1'
+HOST = socket.gethostbyname(socket.gethostname())
 PORT = 33000
 BUFSIZ = 1024
 ADDR = (HOST, PORT)
 
-SERVER = socket(AF_INET, SOCK_STREAM)
+SERVER = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 SERVER.bind(ADDR)
 
 if __name__ == "__main__":
